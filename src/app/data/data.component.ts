@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ViewChild, OnChanges, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, OnChanges, AfterViewInit, SimpleChanges } from '@angular/core';
 import { DataService } from '../Services/data.service';
 import { Information } from '../models/data';
 import { NEVER, Observable } from 'rxjs';
@@ -13,13 +13,11 @@ import { element } from 'protractor';
 })
 export class DataComponent implements OnInit, OnChanges {
   inform: any
-  displayedColumns: string[] = ['Nation', 'Year', 'Population', 'populationGrowth'];
-  smallArry: any;
-  max
+  displayedColumns: string[] = ['Nation', 'Year', 'Population', 'PopulationGrowth'];
+  max :number
   flag = true
-  constructor(private data: DataService, private changeDetectorRef: ChangeDetectorRef) {
+  constructor(private data: DataService) {
   }
-
 
   @ViewChild(MatTable, { static: false }) table: MatTable<any>;
 
@@ -33,15 +31,15 @@ export class DataComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges() {
-    console.log("fghgfdfghjhgfghjhgfg");
-    console.log(window.innerWidth);
-    if (window.innerWidth == 728) {
-
-      // this.inform.forEach((element,index) => {
-      //   this.smallArry[index].Nation=element
-      //   this.smallArry[index].Year=element
-      // });
-
+    const ether=this.inform
+    if (window.innerWidth < 400) {
+      this.inform.map(item=>{
+        delete item.Population,
+        delete item.PopulationGrowth
+      })
+    }
+    else{
+      this.inform=ether
     }
   }
 
