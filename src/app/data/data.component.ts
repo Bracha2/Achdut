@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild, OnChanges, AfterViewInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, SimpleChanges } from '@angular/core';
 import { DataService } from '../Services/data.service';
 import { Information } from '../models/data';
 import { NEVER, Observable } from 'rxjs';
 import { MatTable } from '@angular/material';
 import { element } from 'protractor';
+import { log } from 'console';
 
 
 @Component({
@@ -11,36 +12,44 @@ import { element } from 'protractor';
   templateUrl: './data.component.html',
   styleUrls: ['./data.component.scss']
 })
-export class DataComponent implements OnInit, OnChanges {
+export class DataComponent implements OnInit {
   inform: any
   displayedColumns: string[] = ['Nation', 'Year', 'Population', 'PopulationGrowth'];
-  max :number
+  max: number
   flag = true
+  temp: string[]
+  name:string;
   constructor(private data: DataService) {
   }
 
   @ViewChild(MatTable, { static: false }) table: MatTable<any>;
 
   ngOnInit() {
+    window.addEventListener("resize", () => {
+      console.log(window.innerWidth);
+      if (window.innerWidth < 400) {
+        this.inform.map(item => {
+          delete item.Population
+        })
+        this.displayedColumns=['Nation', 'Year', 'PopulationGrowth'];
+      }
+      else {
+        this.flag && this.temp.reverse();
+        this.inform.forEach((item, index) => item.Population = this.temp[index])
+        this.flag && this.temp.reverse();
+        this.displayedColumns=['Nation', 'Year', 'Population', 'PopulationGrowth'];
+      }
+      this.table && this.table.renderRows()
+
+    });
     this.data.getData().subscribe(result => {
       this.inform = result.data
       this.sort()
       this.populationGrowthAllYear()
       this.greatValue()
+      this.temp = this.inform.map(({ Population }) => Population
+      )
     })
-  }
-
-  ngOnChanges() {
-    const ether=this.inform
-    if (window.innerWidth < 400) {
-      this.inform.map(item=>{
-        delete item.Population,
-        delete item.PopulationGrowth
-      })
-    }
-    else{
-      this.inform=ether
-    }
   }
 
   sort() {
@@ -52,7 +61,6 @@ export class DataComponent implements OnInit, OnChanges {
   populationGrowthAllYear() {
     this.inform.forEach((element, index) => {
       index > 0 && (element.populationGrowth = element.Population - this.inform[index - 1].Population)
-
     });
   }
 
