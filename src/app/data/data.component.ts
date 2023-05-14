@@ -18,7 +18,8 @@ export class DataComponent implements OnInit {
   max: number
   flag = true
   temp: string[]
-  name:string;
+  buttonSort="sorting by years"
+  
   constructor(private data: DataService) {
   }
 
@@ -26,7 +27,6 @@ export class DataComponent implements OnInit {
 
   ngOnInit() {
     window.addEventListener("resize", () => {
-      console.log(window.innerWidth);
       if (window.innerWidth < 400) {
         this.inform.map(item => {
           delete item.Population
