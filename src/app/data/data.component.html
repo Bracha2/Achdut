@@ -1,4 +1,4 @@
-<div class="allData">
+<div class="allData" (window:resize)="onResize($event)" >
 <h1 class="title">population data by years</h1>
 <table class="table" *ngIf="inform" mat-table [dataSource]="inform" class="mat-elevation-z8">
     <ng-container matColumnDef="Nation">
@@ -8,7 +8,7 @@
 
       <ng-container matColumnDef="Year">
         <th mat-header-cell *matHeaderCellDef> Year </th>
-        <td mat-cell *matCellDef="let element"> {{element.Year}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.Year  }} </td>
       </ng-container>
 
       <ng-container matColumnDef="Population">

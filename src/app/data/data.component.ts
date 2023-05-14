@@ -26,22 +26,6 @@ export class DataComponent implements OnInit {
   @ViewChild(MatTable, { static: false }) table: MatTable<any>;
 
   ngOnInit() {
-    window.addEventListener("resize", () => {
-      if (window.innerWidth < 400) {
-        this.inform.map(item => {
-          delete item.Population
-        })
-        this.displayedColumns=['Nation', 'Year', 'PopulationGrowth'];
-      }
-      else {
-        this.flag && this.temp.reverse();
-        this.inform.forEach((item, index) => item.Population = this.temp[index])
-        this.flag && this.temp.reverse();
-        this.displayedColumns=['Nation', 'Year', 'Population', 'PopulationGrowth'];
-      }
-      this.table && this.table.renderRows()
-
-    });
     this.data.getData().subscribe(result => {
       this.inform = result.data
       this.sort()
@@ -51,7 +35,21 @@ export class DataComponent implements OnInit {
       )
     })
   }
-
+  onResize($event){
+    if ($event.target.innerWidth < 400) {
+      this.inform.map(item => {
+        delete item.Population
+      })
+      this.displayedColumns=['Nation', 'Year', 'PopulationGrowth'];
+    }
+    else {
+      this.flag && this.temp.reverse();
+      this.inform.forEach((item, index) => item.Population = this.temp[index])
+      this.flag && this.temp.reverse();
+      this.displayedColumns=['Nation', 'Year', 'Population', 'PopulationGrowth'];
+    }
+    this.table && this.table.renderRows()
+  }
   sort() {
     this.inform = this.flag ? this.inform.sort((a, b) => a.Year - b.Year) : this.inform.sort((a, b) => b.Year - a.Year)
     this.flag = !this.flag
