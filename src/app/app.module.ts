@@ -8,6 +8,7 @@ import { DataComponent } from './data/data.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule  } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { MatButtonModule } from '@angular/material/button';
     HttpClientModule,
     BrowserAnimationsModule,
     MatTableModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule
     
   ],
   providers: [],

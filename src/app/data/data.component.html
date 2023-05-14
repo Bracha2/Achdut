@@ -9,6 +9,7 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
-
-  <button id="sortButton" (click)="sort()" mat-raised-button>{{buttonSort}}</button>
+  <button id="sortButton" (click)="sort()" mat-raised-button>
+    <mat-icon>sort</mat-icon>
+    {{buttonSort}}</button>
 </div>

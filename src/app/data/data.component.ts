@@ -18,7 +18,7 @@ export class DataComponent implements OnInit {
   max: number
   flag = true
   temp: string[];
-  buttonSort = "sorting by years"
+  buttonSort = "sorting by years desc"
 
   constructor(private data: DataService) {
   }
@@ -54,6 +54,7 @@ export class DataComponent implements OnInit {
   sort() {
     this.inform = this.flag ? this.inform.sort((a, b) => a.Year - b.Year) : this.inform.sort((a, b) => b.Year - a.Year)
     this.flag = !this.flag
+    this.buttonSort = this.flag ? 'sorting by years desc' : 'sorting by years asc'
     this.table && this.table.renderRows()
   }
 
