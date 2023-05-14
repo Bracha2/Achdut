@@ -17,9 +17,9 @@ export class DataComponent implements OnInit {
   displayedColumns: string[] = ['Nation', 'Year', 'Population', 'PopulationGrowth'];
   max: number
   flag = true
-  temp: string[]
-  buttonSort="sorting by years"
-  
+  temp: string[];
+  buttonSort = "sorting by years"
+
   constructor(private data: DataService) {
   }
 
@@ -35,18 +35,19 @@ export class DataComponent implements OnInit {
       )
     })
   }
-  onResize($event){
+  onResize($event) {
     if ($event.target.innerWidth < 400) {
       this.inform.map(item => {
         delete item.Population
       })
-      this.displayedColumns=['Nation', 'Year', 'PopulationGrowth'];
+      this.displayedColumns = ['Nation', 'Year', 'PopulationGrowth'];
     }
     else {
       this.flag && this.temp.reverse();
       this.inform.forEach((item, index) => item.Population = this.temp[index])
       this.flag && this.temp.reverse();
-      this.displayedColumns=['Nation', 'Year', 'Population', 'PopulationGrowth'];
+      this.displayedColumns = ['Nation', 'Year', 'Population', 'PopulationGrowth'];
+
     }
     this.table && this.table.renderRows()
   }
@@ -58,8 +59,9 @@ export class DataComponent implements OnInit {
 
   populationGrowthAllYear() {
     this.inform.forEach((element, index) => {
-      index > 0 && (element.populationGrowth = element.Population - this.inform[index - 1].Population)
+      index > 0 && (element.PopulationGrowth = element.Population - this.inform[index - 1].Population)
     });
+    this.table && this.table.renderRows()
   }
 
   greatValue() {
