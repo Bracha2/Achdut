@@ -1,10 +1,6 @@
-import { Component, OnInit, ViewChild, AfterViewInit, SimpleChanges } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataService } from '../Services/data.service';
-import { Information } from '../models/data';
-import { NEVER, Observable } from 'rxjs';
 import { MatTable } from '@angular/material';
-import { element } from 'protractor';
-import { log } from 'console';
 
 
 @Component({
@@ -36,6 +32,7 @@ export class DataComponent implements OnInit {
     })
   }
   onResize($event) {
+    debugger
     if ($event.target.innerWidth < 400) {
       this.inform.map(item => {
         delete item.Population
@@ -47,10 +44,10 @@ export class DataComponent implements OnInit {
       this.inform.forEach((item, index) => item.Population = this.temp[index])
       this.flag && this.temp.reverse();
       this.displayedColumns = ['Nation', 'Year', 'Population', 'PopulationGrowth'];
-
     }
     this.table && this.table.renderRows()
   }
+  
   sort() {
     this.inform = this.flag ? this.inform.sort((a, b) => a.Year - b.Year) : this.inform.sort((a, b) => b.Year - a.Year)
     this.flag = !this.flag

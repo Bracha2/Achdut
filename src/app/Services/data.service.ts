@@ -13,5 +13,6 @@ export class DataService {
   getData():Observable<any> {
     return this._http.get('https://datausa.io/api/data?drilldowns=Nation&measures=Population')
   }
+  
 }
 
